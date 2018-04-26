@@ -9,5 +9,6 @@ $zaloClient->SendMess();
 // $zaloClient->UploadImage();
 // $zaloClient->GetInfoFollower();
 // $zaloClient->CreateProducts();
+// $zaloClient->PostArticle();
 
 ?>
