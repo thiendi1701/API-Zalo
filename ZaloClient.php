@@ -43,19 +43,19 @@ class ZaloClient {
     }
 
     // Gửi tin nhắn hình
-    // public function SendMessImage()
-    // {
-    //     $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
-    //     $data = array(
-    //     'uid' => '8769581709013811958', // user id
-    //     'imageid' => '92cd845e955a7c04254b',
-    //     'message' => 'hello'
-    //     );
-    //     $params = ['data' => $data];
-    //     $response = $zalo->post(ZaloEndpoint::API_OA_SEND_PHOTO_MSG, $params);
-    //     $result = $response->getDecodedBody(); // result
-    //     print_r($result);
-    // }
+    public function SendMessImage()
+    {
+        $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
+        $data = array(
+        'uid' => '8769581709013811958', // user id
+        'imageid' => '92cd845e955a7c04254b',
+        'message' => 'hello'
+        );
+        $params = ['data' => $data];
+        $response = $zalo->post(ZaloEndpoint::API_OA_SEND_PHOTO_MSG, $params);
+        $result = $response->getDecodedBody(); // result
+        print_r($result);
+    }
 
     // Gửi tin nhắn dạng GIF
      public function SendMessGif()
