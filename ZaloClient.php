@@ -42,6 +42,37 @@ class ZaloClient {
         }
     }
 
+    // Lấy thông tin người quan tâm OA
+    public function GetInfoFollower()
+    {
+        $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
+        $followerIds = $this->getFollowerIDs();
+        foreach ($followerIds as $follower) {
+            
+        $params = ['uid' => $follower['uid']];
+        $response = $zalo->get(ZaloEndpoint::API_OA_GET_PROFILE, $params);
+        $result = $response->getDecodedBody(); // result
+        print_r($result)."\n";
+        }
+
+
+        // $params = ['uid' => 1785179753369910605]; // put user id here
+        // $response = $zalo->get(ZaloEndpoint::API_OA_GET_PROFILE, $params);
+        // $result = $response->getDecodedBody(); // result
+
+    }
+
+    //Upload hình
+    public function UploadImage()
+    {
+        $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
+        $filePath = 'https://cdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s9-.jpg';
+        $params = ['file' => new ZaloFile($filePath)];
+        $response = $zalo->post(ZaloEndpoint::API_OA_UPLOAD_PHOTO, $params);
+        $result = $response->getDecodedBody(); // result
+        print_r($result);
+    }
+
     // Gửi tin nhắn hình
     public function SendMessImage()
     {
@@ -57,42 +88,57 @@ class ZaloClient {
         print_r($result);
     }
 
+    
+
+    //Upload Gif
+    public function UploadGif()
+    {
+        $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
+        $filePath = 'https://media1.giphy.com/avatars/nikdudukovic/ylDRTR05sy6M.gif';
+        $params = ['file' => new ZaloFile($filePath)];
+        $response = $zalo->post(ZaloEndpoint::API_OA_UPLOAD_GIF, $params);
+        $result = $response->getDecodedBody(); // result
+        print_r($result);
+    }
+
     // Gửi tin nhắn dạng GIF
      public function SendMessGif()
     {
         $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
-        $data = array(
-            'uid' => '8769581709013811958', // put_user_id_here
-            'imageid' => "8193867958810412755",
-            'width' => 200,
-            'height' => 200
-        );
+        $followerIds = $this->getFollowerIDs();
+        foreach ($followerIds as $follower) {
+            $data = [
+                'uid' => $follower['uid'],
+                'imageid' => "3BdFR9wTIy1gLkCzOLwqhhbJnCsJi6qoX3tNQrvbHJ0=",
+                'width' => 200,
+                'height' => 200
+            ];
+
+        // $data = array(
+        //     'uid' => '8769581709013811958', // put_user_id_here
+        //     'imageid' => "pwFPYbKT9UEZEzzONZFLaniZVW7nzgif5Iv0qdcoTNU=",
+        //     'width' => 200,
+        //     'height' => 200
+        // );
         $params = ['data' => $data];
         $response = $zalo->post(ZaloEndpoint::API_OA_SEND_GIF_MSG, $params);
         $result = $response->getDecodedBody(); // result
         print_r($result);
+        }
     }
 
-    //Upload hình
-    public function UploadImage()
+    
+    //upload product images
+    public function UploadProductImages()
     {
         $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
-        $filePath = 'https://cdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s9-.jpg';
+        $filePath = 'https://cdn.fptshop.com.vn/Uploads/Originals/2015/12/28/635869123783238651_iphone-5s-5.jpg';
         $params = ['file' => new ZaloFile($filePath)];
-        $response = $zalo->post(ZaloEndpoint::API_OA_UPLOAD_PHOTO, $params);
+        $response = $zalo->post(ZaloEndpoint::API_OA_STORE_UPLOAD_PRODUCT_PHOTO, $params);
         $result = $response->getDecodedBody(); // result
         print_r($result);
     }
-
-    // Lấy thông tin người quan tâm OA
-    public function GetInfoFollower()
-    {
-        $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
-        $params = ['uid' => '1612203523067543834']; // put user id here
-        $response = $zalo->get(ZaloEndpoint::API_OA_GET_PROFILE, $params);
-        $result = $response->getDecodedBody(); // result
-        print_r($result);
-    }
+    
 
     // Tạo sản phẩm
     public function CreateProducts()
@@ -100,7 +146,7 @@ class ZaloClient {
         $zalo = new Zalo(ZaloConfig::getInstance()->getConfig());
         // $cate = array('cateid' => 'put_your_cate_id_here');
         // $cates = [$cate];
-        $photo = array('id' => 'f5e713ef02ebebb5b2fa');
+        $photo = array('id' => '0ca5b20df94b1015495a');
         $photos = [$photo];
         $data = array(
             // 'cateids' => $cates,
